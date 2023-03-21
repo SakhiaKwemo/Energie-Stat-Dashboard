@@ -1,3 +1,17 @@
+# Etape 1
+1. Dans le terminal execute
+```js
+git clone https://github.com/SakhiaKwemo/Energie-Stat-Dashboard.git Project
+```
+2. Dans le terminal execute
+```js
+npm install
+```
+3. Dans le terminal execute
+```js
+npm start
+```
+
 ## Minimal [(Free version)](https://minimal-kit-react.vercel.app/)
 
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
