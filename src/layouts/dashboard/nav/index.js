@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
@@ -14,6 +14,7 @@ import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
+import './nav.css'
 
 // ----------------------------------------------------------------------
 
@@ -35,10 +36,12 @@ Nav.propTypes = {
 };
 
 export default function Nav({ openNav, onCloseNav }) {
+  const [dropClick, setdropClick] = useState(true)
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
-
+  // const isDesktop = false
+  console.log(dropClick)
   useEffect(() => {
     if (openNav) {
       onCloseNav();
@@ -78,30 +81,6 @@ export default function Nav({ openNav, onCloseNav }) {
       <NavSection data={navConfig} />
 
       <Box sx={{ flexGrow: 1 }} />
-
-      <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Box
-            component="img"
-            src="/assets/illustrations/illustration_avatar.png"
-            sx={{ width: 100, position: 'absolute', top: -50 }}
-          />
-
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography gutterBottom variant="h6">
-              Get more?
-            </Typography>
-
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              From only $69
-            </Typography>
-          </Box>
-
-          <Button href="https://material-ui.com/store/items/minimal-dashboard/" target="_blank" variant="contained">
-            Upgrade to Pro
-          </Button>
-        </Stack>
-      </Box>
     </Scrollbar>
   );
 
@@ -109,8 +88,7 @@ export default function Nav({ openNav, onCloseNav }) {
     <Box
       component="nav"
       sx={{
-        flexShrink: { lg: 0 },
-        width: { lg: NAV_WIDTH },
+
       }}
     >
       {isDesktop ? (
@@ -127,20 +105,55 @@ export default function Nav({ openNav, onCloseNav }) {
         >
           {renderContent}
         </Drawer>
-      ) : (
-        <Drawer
-          open={openNav}
-          onClose={onCloseNav}
-          ModalProps={{
-            keepMounted: true,
-          }}
+      ) : 
+        // <Drawer
+        //   open
+        //   onClose={onCloseNav}
+        //   ModalProps={{
+        //     keepMounted: true,
+        //   }}
+        //   //keeps things dead or gray
+        //   PaperProps={{
+        //     sx: { width: NAV_WIDTH },
+        //   }}
+        // >
+        //   {renderContent}
+        // </Drawer>
+        (dropClick ? 
+          <Drawer
+          open
+          variant="permanent"
           PaperProps={{
-            sx: { width: NAV_WIDTH },
+            sx: {
+              height: 50,
+              bgcolor: 'white',
+              width: 50,
+            },
           }}
         >
-          {renderContent}
+          <button onKeyDown = {() => setdropClick(!dropClick)} onClick = {() => setdropClick(!dropClick)} className="dropdown">
+            <img  src="./assets/dropdown.png" alt="hamburger"/>
+          </button>
         </Drawer>
-      )}
+        :
+        <Drawer
+        open
+        variant="permanent"
+        PaperProps={{
+          sx: {
+            width: NAV_WIDTH,
+            bgcolor: 'white',
+            borderRightStyle: 'solid',
+          },
+        }}
+      >
+        <button onKeyDown = {() => setdropClick(!dropClick)} onClick = {() => setdropClick(!dropClick)} className="dropdown2">
+          <text>Exit</text>
+        </button>
+        {renderContent}
+      </Drawer>
+        )
+      }
     </Box>
   );
 }

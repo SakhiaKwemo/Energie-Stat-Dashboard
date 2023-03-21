@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 //
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Header from './header';
 import Nav from './nav';
 
@@ -37,9 +38,12 @@ export default function DashboardLayout() {
 
   return (
     <StyledRoot>
-      <Header onOpenNav={() => setOpen(true)} />
+      {/* <Header onOpenNav={() => setOpen(true)} /> */}
 
       <Nav openNav={open} onCloseNav={() => setOpen(false)} />
+      {/* <div className="dropdown">
+        <img src="./assets/dropdown.png" alt="hamburger"/>
+      </div> */}
 
       <Main>
         <Outlet />
@@ -47,3 +51,6 @@ export default function DashboardLayout() {
     </StyledRoot>
   );
 }
+
+
+
